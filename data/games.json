@@ -424,5 +424,32 @@
    "playsLike": "Love Letter with lying",
    "bggUrl": "https://boardgamegeek.com/boardgame/131357"
   }
+ ],
+ "picks": [
+  {
+   "list": "Sam",
+   "note": "",
+   "games": {
+    "Wingspan": "Great with two",
+    "Cascadia": "Quiet, pretty, quick to teach",
+    "Azul": "The one I hand to new players"
+   }
+  },
+  {
+   "list": "Alex",
+   "note": "",
+   "games": {
+    "Just One": "Never not funny",
+    "Codenames": "Big groups, loud tables",
+    "Coup": "Five minutes, three betrayals"
+   }
+  },
+  {
+   "list": "Game of the week",
+   "note": "",
+   "games": {
+    "Ark Nova": "Give it two hours and a clear table"
+   }
+  }
  ]
 }
