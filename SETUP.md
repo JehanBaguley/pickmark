@@ -37,11 +37,14 @@ fill in the form, pick your colours, and copy the two blocks it gives you into
 `config.js` and the `<meta>` lines of `index.html`. Nothing you type is sent
 anywhere: it all runs in your browser. The rest of this step explains what it writes.
 
-One thing worth knowing, because it is the only third party in the whole project:
-both pages load two typefaces from Google Fonts, so every visitor's browser makes
-a request to `fonts.googleapis.com`. If that matters for your venue, download the
-two `.woff2` files, drop them next to `index.html`, and replace the `@import` at
-the top of the `<style>` block with a local `@font-face`.
+Worth knowing, because people ask: **this site makes no third-party requests at
+all.** The typefaces are committed in `fonts/` and served from your own origin, so
+nothing about your customers reaches anyone else. No analytics, no trackers, no
+CDN. The only outbound request a visitor's browser makes is to your own Google
+Sheet, to pick up price and blurb changes since the last nightly build.
+
+If you swap the typefaces, replace the files in `fonts/`, the `@font-face` block
+at the top of the `<style>` in `index.html` and `setup.html`, and `fonts/LICENSE.md`.
 
 The only file you need to touch. Every field is explained in its comments:
 your name, the small line above the title, the tagline, contact link, your
