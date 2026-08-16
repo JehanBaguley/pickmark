@@ -16,7 +16,7 @@ Your site will live at `yourname.github.io/your-repo-name`.
 ## 2. Make your sheet
 
 Create a Google Sheet with a tab named `data`. Copy the header row from
-[the template sheet](https://github.com/JehanBaguley/shelf-guide-template/blob/main/sheet-template.csv):
+[the template sheet](https://github.com/JehanBaguley/pickmark/blob/main/sheet-template.csv):
 
 ```
 name, bgg_link, playable, for_sale, price, blurb, pick_by, pick_note, rating,
@@ -32,7 +32,7 @@ Then File → Share → **Anyone with the link: Viewer**, and note your sheet id
 
 ## 3. Edit config.js
 
-**The short way:** open [the setup wizard](https://jehanbaguley.github.io/shelf-guide-template/setup.html),
+**The short way:** open [the setup wizard](https://jehanbaguley.github.io/pickmark/setup.html),
 fill in the form, pick your colours, and copy the two blocks it gives you into
 `config.js` and the `<meta>` lines of `index.html`. It runs entirely in your
 browser and sends nothing anywhere. The rest of this step explains what it writes.
