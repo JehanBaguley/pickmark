@@ -1,14 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Pickmark: a mark on a card. Espresso ground, cream card, tomato mark.
-       Built to stay legible at 16px: one shape, one accent, no fine detail. -->
-  <rect width="512" height="512" rx="112" fill="#2B2019"/>
-  <rect x="118" y="104" width="276" height="304" rx="34" fill="#F4EAD2"/>
-  <g fill="#2B2019" opacity="0.16">
-    <rect x="158" y="168" width="150" height="20" rx="10"/>
-    <rect x="158" y="216" width="196" height="20" rx="10"/>
-    <rect x="158" y="264" width="118" height="20" rx="10"/>
-  </g>
-  <circle cx="330" cy="330" r="66" fill="#D9503C"/>
-  <path d="M302 331 l20 21 l38 -44" fill="none" stroke="#F4EAD2" stroke-width="22"
-        stroke-linecap="round" stroke-linejoin="round"/>
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="stamp-180" clip-path="url(#clip0_0_4)">
+<rect id="Rectangle" width="180" height="180" rx="40" fill="#D94F3B"/>
+<path id="P" fill-rule="evenodd" clip-rule="evenodd" d="M45 135V45H73.8C97.2 45 130.5 48.6 130.5 71.1C130.5 95.4 97.2 97.2 73.8 97.2V135H45ZM73.8 62.1V81.9C88.2 81.9 104.4 80.1 104.4 72C104.4 63.9 88.2 62.1 73.8 62.1Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<rect width="180" height="180" fill="white"/>
+</clipPath>
+</defs>
 </svg>
