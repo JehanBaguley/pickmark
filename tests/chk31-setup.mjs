@@ -12,13 +12,16 @@ await pg.waitForTimeout(400);
 const fail = [];
 const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fail.push(m); };
 
-// 1. default output parses as the same shape config.js uses
+// 1. an untouched wizard must emit a blank identity, never a worked example.
+//    The old default was the cafe's own name, sheet, site and email, which meant
+//    anyone who skipped a field published somebody else's details.
 const out1 = await pg.textContent('#out');
 const obj1 = JSON.parse(out1.slice(out1.indexOf('{'), out1.lastIndexOf('}') + 1));
-ok(obj1.name === 'Meeple & Mug', 'default name round-trips');
-ok(/gviz\/tq\?tqx=out:csv/.test(obj1.sheetCsvUrl), 'sheet link becomes a gviz csv feed');
-ok(obj1.sheetCsvUrl.includes('1PuwiRbEurcLIG8YOUGzk6aBT5XMR9b9sVRWdrKw1pSQ'), 'sheet id preserved');
+ok(obj1.name === '', 'default name is blank, not a real venue');
+ok(obj1.sheetCsvUrl === '', 'default sheet is blank');
+ok(obj1.bggUser === '' && obj1.contactEmail === '' && obj1.siteUrl === '', 'no default identity at all');
 ok(JSON.stringify(obj1.colors) === '{}', 'default preset writes no colour overrides');
+ok(!/meepleandmug|1PuwiRbEurcLIG8YOUGzk6aBT5XMR9b9sVRWdrKw1pSQ/.test(out1), 'no cafe identity in the default output');
 
 // 2. a fork's own sheet id is what comes out, not the template's
 await pg.fill('#f-sheet', 'https://docs.google.com/spreadsheets/d/1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/edit#gid=0');
@@ -26,6 +29,7 @@ await pg.fill('#f-name', 'Jehan’s Shelf');
 await pg.waitForTimeout(150);
 const out2 = await pg.textContent('#out');
 const obj2 = JSON.parse(out2.slice(out2.indexOf('{'), out2.lastIndexOf('}') + 1));
+ok(/gviz\/tq\?tqx=out:csv/.test(obj2.sheetCsvUrl), 'sheet link becomes a gviz csv feed');
 ok(obj2.sheetCsvUrl.includes('1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), 'fork sheet id used');
 ok(!obj2.sheetCsvUrl.includes('1PuwiRbEurcLIG8YOUGzk6aBT5XMR9b9sVRWdrKw1pSQ'), 'template sheet id gone');
 ok(obj2.name === 'Jehan’s Shelf', 'curly apostrophe survives the round-trip');
