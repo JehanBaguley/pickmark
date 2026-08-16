@@ -12,8 +12,8 @@
 window.SHELF_CONFIG =
 {
   "name": "Your Shelf",
-  "guideName": "Shelf Guide",
-  "kicker": "A Pickmark demo | 19 games | edit config.js to make it yours",
+  "guideName": "Game Guide",
+  "kicker": "A Pickmark demo · 19 games · edit config.js to make it yours",
   "tagline": "This is what your catalogue looks like. Nineteen games, real stats, no setup.",
   "siteUrl": "https://github.com/JehanBaguley/pickmark",
   "contactUrl": "",
