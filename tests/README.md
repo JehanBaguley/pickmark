@@ -15,6 +15,7 @@ data-only nightly commits skip them.
 | chk29 | motion honesty: instant snaps vs tap glides, ripple hygiene, tab-change scroll |
 | chk30-pwa | manifest + service worker registration, offline reload still renders the shelf |
 | chk31-setup | the setup wizard emits parseable config.js and never a fork's wrong sheet |
+| chk32-template-clean | no venue's name, address, sheet, email or collection ships as a default |
 
 Run locally:
 
