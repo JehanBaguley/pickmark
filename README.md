@@ -65,6 +65,20 @@ the genre vocabulary. The sheet contract, the override rules, the self-flagging,
 filters and the site are all collection-agnostic. Swapping the enricher for another
 metadata source (Open Library for books, Discogs for records) is a contained change.
 
+## Support, and what to expect from me
+
+I read every issue, and I fix things that are broken for everyone. I do not do bespoke
+setup, custom features, or troubleshooting of your Google Sheet. If you want the whole
+thing set up for you, that is a service and I charge for it.
+
+This is a free template maintained by one person with a day job. There is no SLA and there
+never will be one. The upside is that there is nothing to cancel and nothing to renew: your
+copy is yours, it runs on infrastructure I have no part in, and it keeps working whether or
+not I am paying attention.
+
+If it stops updating, `SETUP.md` has a short troubleshooting section, and the Actions tab in
+your own repository will tell you what failed.
+
 ## Credits and licence
 
 The code is MIT licensed, so do what you like with it.
