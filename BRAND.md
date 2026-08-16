@@ -28,6 +28,74 @@ ink, and the things on a café table.
 
 App theme colours in `manifest.webmanifest` are Vermillion Ink on Rice Paper.
 
+## How the palette is applied
+
+The interface is themed from six of those values. The other nine CSS variables are derived
+from them by the same `shade()` and `mix()` the setup wizard uses, so the wizard's preview
+and the shipped `:root` are the same theme rather than two that merely look alike.
+
+| Variable | Value | From |
+|---|---|---|
+| `--bg` | `#3d3632` | Roasted Sesame |
+| `--bg-deep` | `#2c2724` | derived |
+| `--card` | `#f5f0e8` | Rice Paper |
+| `--card-edge` | `#d3cec8` | derived |
+| `--timber` | `#d4b896` | Toasted Wheat |
+| `--timber-light` | `#ddc8ad` | derived |
+| `--amber` (accent) | `#d4b896` | Toasted Wheat |
+| `--ink` | `#3d3632` | Roasted Sesame |
+| `--ink-soft` | `#6d6661` | derived, lands on Soft Charcoal |
+| `--cream` | `#f5f0e8` | Rice Paper |
+| `--muted` | `#a8a29c` | derived |
+| `--link` | `#5f5344` | derived |
+| `--red` | `#d94f3b` | Vermillion Ink |
+| `--ok` / `--warn` | `#4c8f5d` / `#d08430` | availability status |
+
+## The contrast finding
+
+Applying the palette turned up something the brand board cannot show on its own.
+
+**Vermillion Ink cannot carry text at WCAG AA on either surface.**
+
+| Pair | Ratio | Verdict |
+|---|---|---|
+| Vermillion Ink on Rice Paper | 3.61 | UI components and large text only |
+| Vermillion Ink on Roasted Sesame | 2.90 | fails everything |
+
+That is why the interactive accent is Toasted Wheat (6.26 against the shell, both
+directions) and Vermillion Ink appears only where contrast is not a text requirement: the
+mark, the browser theme colour, the installed app icon, and the `--red` token.
+
+**If you want Vermillion in the interface**, the palette needs a second token, because one
+red cannot serve both surfaces:
+
+- **On Rice Paper:** `#b84332`, Vermillion darkened 15%, gives **4.76** and passes AA for
+  body text on cards.
+- **On Roasted Sesame:** darkening makes it worse (2.19). A dark shell needs a *lighter*
+  vermillion, which is a different colour again.
+
+This is the ordinary shape of the problem: a brand accent is picked against white in a
+presentation, then has to survive two real surfaces. Worth deciding deliberately rather
+than discovering it in an audit.
+
+## Contrast, as shipped
+
+Every text pair in the default theme, measured:
+
+| Pair | Ratio |
+|---|---|
+| Page text on shell | 10.45 |
+| Card text on card | 10.45 |
+| Accent text on shell | 6.26 |
+| Card text on accent chip | 6.26 |
+| Link on card | 6.59 |
+| Secondary text on card | 4.97 |
+| Muted text on shell | 4.69 |
+
+All clear 4.5:1. axe reports zero violations on desktop, mobile, and with the mobile filter
+sheet open. If you change the palette, re-run `a11y-audit` and re-measure: a brand palette
+that fails AA is not a brand palette.
+
 ## The mark
 
 `icon.svg` is the source, exported from Figma. `icon.png`, `icon-192.png` and
