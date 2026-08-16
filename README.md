@@ -6,7 +6,9 @@ Pickmark turns a board game cafe's wall of boxes into a fast, public game picker
 filter by players, time, age, complexity and genre. Staff maintain local details in a Google
 Sheet, while public game data fills in the rest.
 
-It is a static site. No backend, no accounts, no app to install, no subscription.
+It is a static site. No backend, no accounts, no app to install, no subscription, and
+no third-party requests: the typefaces are served from your own origin, so nothing about
+your customers reaches anyone but you.
 
 **[See the demo shelf](https://jehanbaguley.github.io/pickmark/)** |
 **[Set up your own](https://jehanbaguley.github.io/pickmark/setup.html)** |
