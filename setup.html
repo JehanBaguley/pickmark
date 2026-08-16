@@ -9,12 +9,12 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;600&display=swap');
 
-  /* The wizard's own chrome uses the demo shelf's palette. The PREVIEW below uses
-     whatever the visitor picks, via --p-* variables, so the two never fight. */
+  /* The wizard's own chrome is Pickmark's. The PREVIEW below uses whatever the
+     visitor picks, via --p-* variables, so the two never fight. */
   :root{
-    --bg:#123a24;--bg-deep:#0c2a19;--card:#f4ead2;--card-edge:#dccdaa;
-    --amber:#d8d848;--ink:#2b2419;--ink-soft:#6b6150;--cream:#ece5d3;
-    --muted:#9dc0a8;--line:rgba(236,229,211,.16);--timber:#c9a06b;
+    --bg:#3d3632;--bg-deep:#2c2724;--card:#f5f0e8;--card-edge:#d3cec8;
+    --amber:#d4b896;--ink:#3d3632;--ink-soft:#6d6661;--cream:#f5f0e8;
+    --muted:#a8a29c;--line:rgba(245,240,232,.16);--timber:#d4b896;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--cream);
@@ -292,10 +292,11 @@
   // that change a design's character; the rest are derived so nobody has to pick
   // twelve colours to get a decent result.
   var PRESETS = {
-    "Forest (default)": {bg:"#123a24", card:"#f4ead2", amber:"#d8d848", ink:"#2b2419", timber:"#c9a06b", cream:"#ece5d3"},
-    "Navy & gold":      {bg:"#101f38", card:"#f3efe4", amber:"#e0b23c", ink:"#1e2333", timber:"#b9945c", cream:"#eae7de"},
-    "Charcoal & coral": {bg:"#1e1e21", card:"#f5f0ea", amber:"#ef6f5c", ink:"#26221f", timber:"#c99476", cream:"#ece7e1"},
-    "Plum & blush":     {bg:"#2c1a33", card:"#f7ecef", amber:"#e58fb0", ink:"#2e2029", timber:"#c08fa4", cream:"#eee2e7"}
+    "Pickmark (default)": {bg:"#3d3632", card:"#f5f0e8", amber:"#d4b896", ink:"#3d3632", timber:"#d4b896", cream:"#f5f0e8"},
+    "Forest & cream":     {bg:"#123a24", card:"#f4ead2", amber:"#d8d848", ink:"#2b2419", timber:"#c9a06b", cream:"#ece5d3"},
+    "Navy & gold":        {bg:"#101f38", card:"#f3efe4", amber:"#e0b23c", ink:"#1e2333", timber:"#b9945c", cream:"#eae7de"},
+    "Charcoal & coral":   {bg:"#1e1e21", card:"#f5f0ea", amber:"#ef6f5c", ink:"#26221f", timber:"#c99476", cream:"#ece7e1"},
+    "Plum & blush":       {bg:"#2c1a33", card:"#f7ecef", amber:"#e58fb0", ink:"#2e2029", timber:"#c08fa4", cream:"#eee2e7"}
   };
   var KEYS = [
     ["bg",     "Background"],
@@ -307,8 +308,8 @@
   ];
 
   var $ = function(id){ return document.getElementById(id); };
-  var state = Object.assign({}, PRESETS["Forest (default)"]);
-  var activePreset = "Forest (default)";
+  var state = Object.assign({}, PRESETS["Pickmark (default)"]);
+  var activePreset = "Pickmark (default)";
 
   // --- colour helpers -------------------------------------------------------
   function hexToRgb(h){
@@ -330,6 +331,9 @@
     var x = hexToRgb(a), y = hexToRgb(b);
     return toHex(x.r+(y.r-x.r)*p, x.g+(y.g-x.g)*p, x.b+(y.b-x.b)*p);
   }
+  // Twelve values from six. The two mix factors are set so the secondary text they
+  // produce clears WCAG AA (4.5:1) against the surface it sits on, which 0.42/0.52
+  // did not. "link" is the card link colour, "ok"/"warn" the availability dots.
   function derived(s){
     return {
       "bg": s.bg,
@@ -338,12 +342,15 @@
       "card-edge": shade(s.card, -0.14),
       "timber": s.timber,
       "timber-light": shade(s.timber, 0.22),
-      "red": "#c8452e",
+      "red": "#d94f3b",
       "amber": s.amber,
       "ink": s.ink,
-      "ink-soft": mix(s.ink, s.card, 0.42),
+      "ink-soft": mix(s.ink, s.card, 0.26),
       "cream": s.cream,
-      "muted": mix(s.cream, s.bg, 0.52)
+      "muted": mix(s.cream, s.bg, 0.42),
+      "link": shade(s.timber, -0.55),
+      "ok": "#4c8f5d",
+      "warn": "#d08430"
     };
   }
 
@@ -365,7 +372,7 @@
   function buildConfig(){
     var csv = sheetCsv(val("f-sheet"));
     var colors = {};
-    var base = PRESETS["Forest (default)"];
+    var base = PRESETS["Pickmark (default)"];
     var d = derived(state), dBase = derived(base);
     // only write the keys that actually differ from the shipped theme
     Object.keys(d).forEach(function(k){
