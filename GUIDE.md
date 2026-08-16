@@ -2,12 +2,15 @@
 
 For staff. Two minutes to read, and you should never need to read it twice.
 
-The guide lives at **jehanbaguley.github.io/meeple-mug-shelf-guide**. Customers scan the QR
-code at the table and use it to pick a game. Everything on it comes from the Google Sheet.
+The guide lives at your own Pages URL, the one you printed on the QR cards. Customers
+scan it at the table and use it to pick a game. Everything on it comes from the Google
+Sheet, so the sheet is the only thing anyone here has to touch.
 
 ## Adding a game
 
-Open the sheet, go to **Meeple → Add a game**, and fill in six things.
+Open the sheet and add a row. (If whoever set this up installed the optional Apps
+Script, there is an **Add a game** menu that prompts you for each field instead.)
+Either way it is six things.
 
 **Name** as we say it. **BGG link** is the important one: search the game on
 boardgamegeek.com, copy the address bar. **Playable in café** yes or no. **For sale** yes
