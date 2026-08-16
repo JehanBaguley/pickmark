@@ -1,14 +1,15 @@
-# Shelf Guide
+# Pickmark
 
-A browsable catalogue for a shelf full of games, so that someone standing in front of it
-with a coffee in their hand can find something to play in about thirty seconds.
+**Find what fits the table.**
 
-It is a static site. There is no backend, no login, no app to install and no hosting bill.
-A Google Sheet is the only thing anyone edits, and BoardGameGeek fills in the boring parts
-overnight.
+Pickmark turns a board game cafe's wall of boxes into a fast, public game picker. Customers
+filter by players, time, age, complexity and genre. Staff maintain local details in a Google
+Sheet, while public game data fills in the rest.
 
-**[See the demo shelf](https://jehanbaguley.github.io/shelf-guide-template/)** |
-**[Set up your own](https://jehanbaguley.github.io/shelf-guide-template/setup.html)** |
+It is a static site. No backend, no accounts, no app to install, no subscription.
+
+**[See the demo shelf](https://jehanbaguley.github.io/pickmark/)** |
+**[Set up your own](https://jehanbaguley.github.io/pickmark/setup.html)** |
 **[Running it day to day](GUIDE.md)**
 
 ---
@@ -46,8 +47,8 @@ one night, it keeps yesterday's good data rather than publishing a broken catalo
 ## Getting started
 
 1. Click **Use this template** at the top of this page
-2. Open [the setup page](https://jehanbaguley.github.io/shelf-guide-template/setup.html),
-   fill in the form, and copy what it gives you into `config.js`
+2. Open [the setup page](https://jehanbaguley.github.io/pickmark/setup.html), fill in the
+   form, and copy what it gives you into `config.js`
 3. Follow [SETUP.md](SETUP.md) for the remaining five minutes: your sheet, Pages, and the
    nightly sync
 
