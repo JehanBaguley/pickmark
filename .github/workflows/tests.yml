@@ -7,6 +7,8 @@ on:
   pull_request:
     paths: ["index.html", "config.js", "setup.html", "sw.js", "manifest.webmanifest", "scripts/**", "tests/**", "data/**", "*.md"]
   workflow_dispatch: {}
+permissions:
+  contents: read   # this job only reads the tree; it must never be able to push
 jobs:
   playwright:
     runs-on: ubuntu-latest
