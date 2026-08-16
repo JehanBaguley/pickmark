@@ -415,17 +415,22 @@
   }
 
   function buildMeta(){
+    // HTML context, not a JS string: this needs its own escaping, and it is markup
+    // a non-technical owner pastes straight into index.html without reading it.
+    var h = function(x){ return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
     var name = val("f-name"), guide = val("f-guide");
     var title = (name + " " + guide).trim();
     var desc = val("f-tagline") || ("Every game at " + name + ", browsable in thirty seconds.");
     var url = val("f-url");
     var L = [];
-    L.push('<title>' + title + '</title>');
-    L.push('<meta name="description" content="' + desc + '" />');
-    L.push('<meta property="og:title" content="' + title + '" />');
-    L.push('<meta property="og:description" content="' + desc + '" />');
+    L.push('<title>' + h(title) + '</title>');
+    L.push('<meta name="description" content="' + h(desc) + '" />');
+    L.push('<meta property="og:title" content="' + h(title) + '" />');
+    L.push('<meta property="og:description" content="' + h(desc) + '" />');
     L.push('<meta property="og:type" content="website" />');
-    if (url) L.push('<meta property="og:url" content="' + url + '" />');
+    if (url) L.push('<meta property="og:url" content="' + h(url) + '" />');
+    // Without this line a fork's link previews keep pointing at the template author's icon.
+    if (url) L.push('<meta property="og:image" content="' + h(url.replace(/\/?$/, "/")) + 'icon-512.png" />');
     L.push('<meta name="twitter:card" content="summary" />');
     return L.join("\n");
   }
