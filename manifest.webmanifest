@@ -1,6 +1,6 @@
 {
-  "name": "Meeple & Mug Shelf Guide",
-  "short_name": "Shelf Guide",
+  "name": "Meeple & Mug Pickmark",
+  "short_name": "Pickmark",
   "description": "Browse every game on the shelf. Play here or take a copy home.",
   "start_url": ".",
   "scope": ".",
