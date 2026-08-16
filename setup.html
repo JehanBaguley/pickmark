@@ -9,7 +9,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;600&display=swap');
 
-  /* The wizard's own chrome uses the Meeple palette. The PREVIEW below uses
+  /* The wizard's own chrome uses the demo shelf's palette. The PREVIEW below uses
      whatever the visitor picks, via --p-* variables, so the two never fight. */
   :root{
     --bg:#123a24;--bg-deep:#0c2a19;--card:#f4ead2;--card-edge:#dccdaa;
@@ -138,7 +138,7 @@
         <div class="field">
           <label for="f-name">Name</label>
           <p class="hint">The caf&eacute;, club, or person. Shows large at the top and in the footer.</p>
-          <input type="text" id="f-name" value="Meeple &amp; Mug" placeholder="The Dice Tower Caf&eacute;" />
+          <input type="text" id="f-name" placeholder="The Dice Tower Caf&eacute;" />
         </div>
         <div class="field">
           <label for="f-guide">What the catalogue calls itself</label>
@@ -148,12 +148,12 @@
         <div class="field">
           <label for="f-kicker">Small line above the title</label>
           <p class="hint">Usually an address. Leave blank for none.</p>
-          <input type="text" id="f-kicker" value="63 Hardgrave Rd &middot; West End &middot; Brisbane" placeholder="12 Example St &middot; Your Suburb" />
+          <input type="text" id="f-kicker" placeholder="12 Example St &middot; Your Suburb" />
         </div>
         <div class="field">
           <label for="f-tagline">Tagline</label>
           <p class="hint">One line under the title. Say what someone can actually do here.</p>
-          <input type="text" id="f-tagline" value="Every game we&rsquo;ve got. Play one here, or take a new copy home." placeholder="Every game on our shelves, sorted by what you feel like." />
+          <input type="text" id="f-tagline" placeholder="Every game on our shelves, sorted by what you feel like." />
         </div>
       </fieldset>
 
@@ -164,13 +164,13 @@
           <p class="hint">Paste the normal sheet link from your address bar. It must have a tab named
           <span class="mono">data</span>, and be shared as "anyone with the link can view".
           Leave blank for a static list with no sheet.</p>
-          <input type="text" id="f-sheet" value="https://docs.google.com/spreadsheets/d/1PuwiRbEurcLIG8YOUGzk6aBT5XMR9b9sVRWdrKw1pSQ/edit" placeholder="https://docs.google.com/spreadsheets/d/&hellip;" />
+          <input type="text" id="f-sheet" placeholder="https://docs.google.com/spreadsheets/d/&hellip;" />
           <p class="hint" id="sheetnote" aria-live="polite"></p>
         </div>
         <div class="field">
           <label for="f-bgg">BoardGameGeek username</label>
           <p class="hint">Whose collection seeds the nightly stat fetch. Leave blank if you don't have one.</p>
-          <input type="text" id="f-bgg" value="meepleandmug" placeholder="yourbggname" />
+          <input type="text" id="f-bgg" placeholder="yourbggname" />
         </div>
       </fieldset>
 
@@ -179,22 +179,22 @@
         <div class="field">
           <label for="f-site">Your main website</label>
           <p class="hint">Where the name in the footer links to.</p>
-          <input type="text" id="f-site" value="https://www.meepleandmug.com.au" placeholder="https://example.com" />
+          <input type="text" id="f-site" placeholder="https://example.com" />
         </div>
         <div class="field">
           <label for="f-contact">Where "Buy a copy" should send people</label>
           <p class="hint">A contact page, an online shop, or a booking form.</p>
-          <input type="text" id="f-contact" value="https://www.meepleandmug.com.au/contact" placeholder="https://example.com/contact" />
+          <input type="text" id="f-contact" placeholder="https://example.com/contact" />
         </div>
         <div class="field">
           <label for="f-email">Contact email</label>
           <p class="hint">Used only if the link above is blank. Opens a pre-filled email instead.</p>
-          <input type="text" id="f-email" value="admin@meepleandmug.com.au" placeholder="hello@example.com" />
+          <input type="text" id="f-email" placeholder="hello@example.com" />
         </div>
         <div class="field">
           <label for="f-url">Where this site will live</label>
           <p class="hint">Your GitHub Pages address. Only used for social link previews.</p>
-          <input type="text" id="f-url" value="https://jehanbaguley.github.io/meeple-mug-shelf-guide/" placeholder="https://yourname.github.io/your-repo/" />
+          <input type="text" id="f-url" placeholder="https://yourname.github.io/your-repo/" />
         </div>
       </fieldset>
 
@@ -211,9 +211,9 @@
     <h2 class="sronly">Live preview</h2>
     <div class="previewbox" id="preview">
       <div class="pvhead">
-        <p class="pvkicker" id="pv-kicker">63 Hardgrave Rd &middot; West End &middot; Brisbane</p>
-        <p class="pvtitle"><span id="pv-name">Meeple &amp; Mug</span> <b id="pv-guide">Shelf Guide</b></p>
-        <p class="pvsub" id="pv-tagline">Every game we&rsquo;ve got.</p>
+        <p class="pvkicker" id="pv-kicker"></p>
+        <p class="pvtitle"><span id="pv-name">Your shelf</span> <b id="pv-guide">Shelf Guide</b></p>
+        <p class="pvsub" id="pv-tagline"></p>
       </div>
       <div class="pvbar">
         <span class="pvtab on">Everything</span>
@@ -279,7 +279,7 @@
 </div>
 
 <footer>
-  Built for <a href="https://github.com/JehanBaguley/meeple-mug-shelf-guide">Pickmark</a>.
+  Built for <a href="https://github.com/JehanBaguley/pickmark">Pickmark</a>.
   Game data from <a href="https://boardgamegeek.com">BoardGameGeek</a> &mdash; if you show their data publicly,
   keep the credit line in your footer. Their API is non-commercial by default.
 </footer>
