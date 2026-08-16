@@ -34,8 +34,14 @@ Then File → Share → **Anyone with the link: Viewer**, and note your sheet id
 
 **The short way:** open [the setup wizard](https://jehanbaguley.github.io/pickmark/setup.html),
 fill in the form, pick your colours, and copy the two blocks it gives you into
-`config.js` and the `<meta>` lines of `index.html`. It runs entirely in your
-browser and sends nothing anywhere. The rest of this step explains what it writes.
+`config.js` and the `<meta>` lines of `index.html`. Nothing you type is sent
+anywhere: it all runs in your browser. The rest of this step explains what it writes.
+
+One thing worth knowing, because it is the only third party in the whole project:
+both pages load two typefaces from Google Fonts, so every visitor's browser makes
+a request to `fonts.googleapis.com`. If that matters for your venue, download the
+two `.woff2` files, drop them next to `index.html`, and replace the `@import` at
+the top of the `<style>` block with a local `@font-face`.
 
 The only file you need to touch. Every field is explained in its comments:
 your name, the small line above the title, the tagline, contact link, your
