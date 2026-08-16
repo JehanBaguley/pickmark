@@ -1,7 +1,7 @@
 # Make this your own shelf
 
-This repo is a template. One config file gives you your own browsable catalogue —
-for a café, a club, or the shelf in your lounge room — with stats that keep
+This repo is a template. One config file gives you your own browsable catalogue
+for a café, a club, or the shelf in your lounge room, with stats that keep
 themselves up to date from BoardGameGeek. No backend, no hosting bill, nothing to
 maintain once it's running.
 
@@ -44,8 +44,8 @@ optional theme colours. Set `"sheetCsvUrl": ""` if you just want a static list
 with no sheet, and `"bggUser": ""` if you don't have a BGG collection.
 
 Also replace `icon.png` with your own favicon, and (optional, for nice social
-link previews) update the half-dozen `<meta>` lines at the top of `index.html` —
-they're the only identity strings the config can't reach, because social
+link previews) update the half-dozen `<meta>` lines at the top of `index.html`.
+They're the only identity strings the config can't reach, because social
 crawlers don't run JavaScript.
 
 ## 4. Wire the nightly build
@@ -66,16 +66,51 @@ Point any QR generator at your Pages URL. That's the whole deployment.
 ## Rules the template lives by
 
 - **The sheet is the shelf.** Rows not in the sheet don't exist on the site.
-- The build refuses to publish if data coverage collapses — a broken sync gives
+- The build refuses to publish if data coverage collapses. A broken sync gives
   you yesterday's good data, not a broken site.
 - Missing data flags itself amber in the sheet and clears itself when filled
   (see GUIDE.md for the two-minute staff version).
 - If you display BGG data publicly, keep the BoardGameGeek attribution in the
-  footer — their API terms require it, and it's non-commercial by default.
+  footer. Their API terms require it, and it's non-commercial by default.
+
+## When something stops working
+
+Almost every problem is one of five things, and all five are visible from your own repo.
+
+**New games in the sheet aren't appearing on the site.**
+The nightly build didn't run, or it ran and failed. Go to your repo's **Actions** tab and
+look at the most recent "Sync catalogue data" run. A red cross tells you what broke. You can
+always press **Run workflow** to try again straight away rather than waiting for 3am.
+
+**Prices or blurbs are stale, but the rest is fine.**
+Those come live from your sheet on every page load, so this means the browser can't read
+your sheet. Check that it is still shared as **Anyone with the link: Viewer**, and that
+`sheetCsvUrl` in `config.js` still matches the sheet id in your address bar. Paste the
+`sheetCsvUrl` value straight into a browser tab: you should get a CSV download, not a login
+page.
+
+**A whole column is empty or wrong.**
+Columns are matched by heading name, not position. Renaming or deleting a heading silently
+breaks that column, while reordering columns is completely safe. Compare your headings
+against `sheet-template.csv`.
+
+**The site is blank.**
+Open your browser's console. If it says something about `config.js`, you have a JSON syntax
+error, usually a trailing comma or a stray quote inside a name. Run your file through any
+JSON validator, or just re-run the setup wizard and paste a clean copy.
+
+**Ratings are missing for lots of games at once.**
+BoardGameGeek was slow or down when the build ran. The build deliberately keeps yesterday's
+good data rather than publishing a half-empty catalogue, so this fixes itself on the next
+run. If it persists for more than a couple of nights, add a `BGG_TOKEN` secret: unauthenticated
+requests are rate-limited far more aggressively.
+
+**Still stuck?** Open an issue with your repo URL and what you see. See the support note in
+the README for what I can and can't help with.
 
 ## Not board games?
 
 The only BGG-specific code is the enrichment in `scripts/build-data.mjs` and the
-genre vocabulary. Everything else — the sheet contract, overrides, self-flagging,
-filters, the site — is collection-agnostic. Swapping the enricher for another
+genre vocabulary. Everything else (the sheet contract, overrides, self-flagging,
+filters, the site) is collection-agnostic. Swapping the enricher for another
 metadata API (Open Library for books, Discogs for records) is a contained change.
