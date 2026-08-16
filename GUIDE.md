@@ -1,4 +1,4 @@
-# Shelf Guide — how to look after it
+# Pickmark — how to look after it
 
 For staff. Two minutes to read, and you should never need to read it twice.
 
