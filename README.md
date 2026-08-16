@@ -41,8 +41,9 @@ one night, it keeps yesterday's good data rather than publishing a broken catalo
 - Staff and member picks
 - Installable as an app, and it still works with no connection
 - Missing data flags itself amber in your sheet and clears itself when filled
-- Accessible: audited with axe, keyboard navigable, respects reduced motion
-- Nine browser tests that run in CI on every push
+- Accessible: zero axe violations, keyboard navigable, respects reduced motion, every
+  text pair clears WCAG AA
+- Ten browser tests that run in CI on every push
 
 ## Getting started
 
@@ -57,6 +58,23 @@ your fork looks alive before you have typed anything. Replace it whenever you ar
 
 Have a look at `sheet-template.csv` before you start: every BoardGameGeek column in it is
 deliberately blank. That is the contract, shown rather than explained.
+
+## Making it look like you
+
+The setup page has five colour presets and writes the theme for you. Behind them, the
+whole interface runs on twelve CSS variables derived from six you pick, so you never
+choose twelve colours to get a coherent result. Anything you set in `config.js` under
+`colors` overrides the shipped theme; anything you leave out stays as it ships.
+
+The default theme is Pickmark's own, and it belongs to the project rather than to you.
+Replace `icon.png` and the two icon sizes with your own mark, pick your colours, and the
+site is yours. [BRAND.md](BRAND.md) has the palette, the derivation, and the measured
+contrast for every text pair, which is worth reading before you pick something dark on
+dark.
+
+No venue's identity ships as a default anywhere in this repo, and `tests/chk32` fails CI
+if it ever does. A fork that leaves a field blank gets a blank, never somebody else's
+café.
 
 ## Not board games?
 
