@@ -71,5 +71,17 @@ for (const k of ['sheetCsvUrl', 'bggUser', 'contactUrl', 'contactEmail']) {
   ok(obj[k] === '', `config.${k} ships blank`);
 }
 
+// Regions 2 and 4 of the divergence contract: the theme colour is written in three places
+// and they must agree. These are pre-runtime surfaces, read before any script executes, so
+// nothing at runtime can reconcile them. They drifted once and gave an address bar that
+// disagreed with the installed app icon.
+const html = readFileSync('index.html', 'utf8');
+const manifest = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
+const metaTheme = (html.match(/<meta name="theme-color" content="([^"]+)"/) || [])[1];
+ok(!!metaTheme, 'index.html declares a theme-color');
+ok(metaTheme && manifest.theme_color &&
+   metaTheme.toLowerCase() === manifest.theme_color.toLowerCase(),
+   `theme-color agrees with manifest.theme_color (${metaTheme} vs ${manifest.theme_color})`);
+
 if (fail.length) { console.log('FAILURES: ' + fail.join(' | ')); process.exit(1); }
 console.log('ALL PASS');
