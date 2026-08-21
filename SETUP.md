@@ -68,6 +68,10 @@ Then Actions → "Sync catalogue data" → **Run workflow**. From then on it run
 itself nightly at 3am AEST (edit the cron in
 `.github/workflows/sync-data.yml` for your timezone).
 
+## 5. Print a QR code
+
+Point any QR generator at your Pages URL. That's the whole deployment.
+
 ## 6. Amber flags in the sheet (optional, ten minutes)
 
 The nightly build writes `data/gaps.csv`: one quoted line per missing value, in the form
@@ -115,10 +119,6 @@ above is there precisely so an empty gaps tab paints nothing rather than errorin
 
 No script runs in the sheet, and there is nothing to maintain. A cell clears the moment
 someone types in it, and the flags refresh after the next nightly build.
-
-## 7. Print a QR code
-
-Point any QR generator at your Pages URL. That's the whole deployment.
 
 ## Rules the template lives by
 
