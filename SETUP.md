@@ -68,7 +68,55 @@ Then Actions → "Sync catalogue data" → **Run workflow**. From then on it run
 itself nightly at 3am AEST (edit the cron in
 `.github/workflows/sync-data.yml` for your timezone).
 
-## 5. Print a QR code
+## 6. Amber flags in the sheet (optional, ten minutes)
+
+The nightly build writes `data/gaps.csv`: one quoted line per missing value, in the form
+`"Game name|field"`, where field is `players`, `time`, `age` or `rating`. Those are the games
+BoardGameGeek genuinely has nothing for, so they are the only blanks worth filling by hand.
+
+Nothing reads that file until you wire your sheet to it. Two steps, once, and then it looks
+after itself.
+
+**Pull the file in.** Add a tab called `gaps`, and put this in `gaps!A1`:
+
+```
+=IMPORTDATA("https://raw.githubusercontent.com/YOUR-NAME/YOUR-REPO/main/data/gaps.csv")
+```
+
+Google asks you to allow access the first time, and that prompt only appears on desktop.
+Click it once and it refreshes by itself from then on. An empty `gaps` tab means full
+coverage, which is the state you want to be in.
+
+**Paint the cells.** On the `data` tab: Format, then Conditional formatting, then custom
+formula. Both formulas below are written for the **top-left cell of whatever range you
+select**, so swap the column letter to match your sheet. Both assume `name` is column A.
+
+Required fields, amber whenever a row exists and the cell is empty. Select the `bgg_link`,
+`playable` and `blurb` columns from row 2 down:
+
+```
+=AND($A2<>"", B2="")
+```
+
+BGG fields, amber only when BGG has nothing to offer. Select `rating`, `players`, `age` and
+`time` from row 2 down:
+
+```
+=AND(I2="", ISNUMBER(MATCH($A2&"|"&I$1, gaps!$A:$A, 0)))
+```
+
+That second formula reads its own column's header cell, so **the header names have to match
+the field names the build emits**: `rating`, `players`, `age`, `time`. Rename a header and
+that column stops flagging, silently and without an error.
+
+One thing that looks broken and isn't: when your coverage is complete, `gaps.csv` is empty,
+so `gaps!A1` shows `#N/A`. That is the healthy state. The `ISNUMBER(MATCH(...))` wrapper
+above is there precisely so an empty gaps tab paints nothing rather than erroring.
+
+No script runs in the sheet, and there is nothing to maintain. A cell clears the moment
+someone types in it, and the flags refresh after the next nightly build.
+
+## 7. Print a QR code
 
 Point any QR generator at your Pages URL. That's the whole deployment.
 
