@@ -1,0 +1,11 @@
+{
+  "_note": "What the canary expects to find on the LIVE site. A fork should edit these once its own shelf is up: set the game range around your real count, and the minimums to something you would notice losing.",
+  "_baseline": "the shipped 19-game demo shelf: 3 pick lists, 7 picked games, 4 for sale with a price",
+  "_freshness": "maxAgeHours is only enforced once config.js names a sheet. The demo shelf has a fixed build date on purpose and must not go red for it.",
+  "maxAgeHours": 36,
+  "games": { "min": 10, "max": 400 },
+  "minPickLists": 1,
+  "minPickedGames": 3,
+  "minForSale": 1,
+  "maxGapLines": 400
+}
