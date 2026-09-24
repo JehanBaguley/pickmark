@@ -6,6 +6,6 @@
   "games": { "min": 10, "max": 400 },
   "minPickLists": 1,
   "minPickedGames": 3,
-  "minForSale": 9999,
+  "minForSale": 1,
   "maxGapLines": 400
 }
