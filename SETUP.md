@@ -5,13 +5,19 @@ for a café, a club, or the shelf in your lounge room, with stats that keep
 themselves up to date from BoardGameGeek. No backend, no hosting bill, nothing to
 maintain once it's running.
 
-Fifteen minutes, five steps.
+Twenty minutes, six steps, and then it looks after itself.
 
 ## 1. Get your copy
 
-Click **Use this template** (or Fork) on GitHub, name it, then in your new repo's
-settings turn on **Pages** (Settings → Pages → deploy from branch → main, root).
-Your site will live at `yourname.github.io/your-repo-name`.
+Click **Use this template** on GitHub, name it, then in your new repo's settings turn
+on **Pages** (Settings → Pages → deploy from branch → main, root). Your site will live
+at `yourname.github.io/your-repo-name`.
+
+**Use this template, not Fork.** They look the same and they are not. GitHub disables
+scheduled workflows on a fork until somebody opens the Actions tab and presses the
+green "I understand my workflows, go ahead and enable them" button. If you fork and
+skip that, everything looks fine and your catalogue never updates, with nothing red
+anywhere to tell you. If you have already forked, go to Actions and enable them now.
 
 ## 2. Make your sheet
 
@@ -29,6 +35,31 @@ overnight. Blank cell = trust BGG; typed cell = you win.
 
 Then File → Share → **Anyone with the link: Viewer**, and note your sheet id
 (the long string in the URL).
+
+**Who should own this sheet: you, the venue.** Not whoever set the site up for you.
+The sheet is the only thing that is genuinely yours here, everything else is a copy of
+this template, and the person who owns the sheet is the person who can keep the shelf
+alive. If somebody else built this for you, ask them to transfer ownership to you.
+
+**That share setting is load-bearing, and nothing warns you.** "Anyone with the link:
+Viewer" is how both the nightly build and your visitors' browsers read the sheet.
+Tighten it and the site does not go down: it quietly stops updating while continuing to
+show yesterday's catalogue, which is a much harder thing to notice. This exact thing
+happened to the first venue running this, and it took eleven days to spot. Viewer is
+read-only, so it is safe: nobody with the link can change anything.
+
+**Two things about tabs and columns that will cost you an afternoon if you meet them
+the hard way:**
+
+- The feed URL ends in `&sheet=data`. If no tab by that name exists, Google **does not
+  error**. It quietly serves your first tab instead. So if your catalogue is on a tab
+  called `Sheet1` or `Copy of games`, rename it to `data` rather than assuming the URL
+  is being ignored.
+- **Pick one price format and use it for the whole column.** `65` everywhere, or `$65`
+  everywhere, or `~$80` everywhere. Google's feed decides a single type per column, so
+  a column holding both `65` and `~$80` comes back with the numbers intact and the text
+  ones **blank**, silently. The nightly build now flags any game that is for sale with
+  no price, so you will see it, but it is much easier to never cause it.
 
 ## 3. Edit config.js
 
@@ -59,24 +90,63 @@ crawlers don't run JavaScript.
 
 ## 4. Wire the nightly build
 
-In your repo: Settings → Secrets and variables → Actions.
-Add a **variable** `SHEET_CSV_URL` with the same CSV URL from config.js.
-Optionally add a **secret** `BGG_TOKEN` (a BoardGameGeek application token) for
-more reliable stat fetching; without it the build still works, just more gently.
+Go to Actions and run **"Check my setup"**. It reads your config and your sheet the
+same way the build does and tells you in plain words what it found. Do this before
+anything else: it turns "it doesn't work" into "your sheet is not shared".
 
-Then Actions → "Sync catalogue data" → **Run workflow**. From then on it runs
-itself nightly at 3am AEST (edit the cron in
-`.github/workflows/sync-data.yml` for your timezone).
+Then Actions → **"Sync catalogue data"** → Run workflow. From then on it runs itself
+nightly at 3am AEST (edit the cron in `.github/workflows/sync-data.yml` for your
+timezone).
 
-## 5. Print a QR code
+Optionally, in Settings → Secrets and variables → Actions:
+
+- A **secret** `BGG_TOKEN`, a BoardGameGeek application token, for more reliable stat
+  fetching. Without it the build still works, just more gently, and BoardGameGeek has
+  been moving towards requiring one.
+- A **variable** `SHEET_CSV_URL`. You do not need this: the build falls back to
+  `sheetCsvUrl` in config.js. Only set it if you want the build reading a different
+  sheet from the one visitors' browsers read, and be aware that if the two drift apart
+  the nightly and the live page will disagree with each other.
+
+## 5. Tell the canary what normal looks like
+
+There is a second scheduled job, **Canary**, that runs two hours after the nightly and
+looks at your *live site* rather than your code. It is the only check that can catch the
+catalogue being wrong rather than the code being broken, and it emails you when it
+fails.
+
+It compares the live site against `data/expected.json`. That file ships deliberately
+loose, because a brand new shelf with no staff picks and nothing for sale is completely
+normal and must not go red on day one. Once your shelf is real, open it and tighten it:
+
+```json
+"games": { "min": 300, "max": 420 },
+"minPickLists": 1,
+"minPickedGames": 10,
+"minForSale": 20
+```
+
+Set the range around your actual count, and set the minimums to numbers you would want
+to be told about losing. That is the whole value of it. When the canary goes red, fix
+the shelf: **never widen these to make it green again**, because that is the alarm
+working.
+
+The canary also keeps your repo from going quiet. GitHub switches off scheduled
+workflows after 60 days of inactivity, and the nightly only commits when something
+actually changed, so a stable shelf would otherwise have its updates silently disabled
+after two months.
+
+## 6. Print a QR code
 
 Point any QR generator at your Pages URL. That's the whole deployment.
 
-## 6. Amber flags in the sheet (optional, ten minutes)
+## 7. Amber flags in the sheet (optional, ten minutes)
 
 The nightly build writes `data/gaps.csv`: one quoted line per missing value, in the form
-`"Game name|field"`, where field is `players`, `time`, `age` or `rating`. Those are the games
-BoardGameGeek genuinely has nothing for, so they are the only blanks worth filling by hand.
+`"Game name|field"`, where field is `players`, `time`, `age`, `rating` or `price`. The first
+four are the games BoardGameGeek genuinely has nothing for, so they are the only blanks worth
+filling by hand. `price` is different: it means a game is marked for sale with no price coming
+through, which is either a half-finished row or the mixed-price-format trap from step 2.
 
 Nothing reads that file until you wire your sheet to it. Two steps, once, and then it looks
 after itself.
@@ -123,8 +193,11 @@ someone types in it, and the flags refresh after the next nightly build.
 ## Rules the template lives by
 
 - **The sheet is the shelf.** Rows not in the sheet don't exist on the site.
-- The build refuses to publish if data coverage collapses. A broken sync gives
-  you yesterday's good data, not a broken site.
+- **The build fails closed.** If your sheet cannot be read, the build stops rather than
+  publishing something else. If the catalogue suddenly loses every price, every for-sale
+  flag or every staff pick, it stops too, because only a person can type those and losing
+  all of them at once means the feed is no longer your shelf. A broken sync gives you
+  yesterday's good data, never a confidently wrong site.
 - Missing data flags itself amber in the sheet and clears itself when filled
   (see GUIDE.md for the two-minute staff version).
 - If you display BGG data publicly, keep the BoardGameGeek attribution in the
@@ -132,7 +205,9 @@ someone types in it, and the flags refresh after the next nightly build.
 
 ## When something stops working
 
-Almost every problem is one of five things, and all five are visible from your own repo.
+**Run "Check my setup" from the Actions tab first.** It diagnoses everything below
+automatically and will usually just tell you the answer. The rest of this section is
+what it is checking, and what to do about each one.
 
 **New games in the sheet aren't appearing on the site.**
 The nightly build didn't run, or it ran and failed. Go to your repo's **Actions** tab and
